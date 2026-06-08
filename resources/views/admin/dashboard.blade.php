@@ -1,14 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Dashboard — {{ now()->format('d/m/Y') }}
+            Inicio — {{ now()->format('d/m/Y') }}
         </h2>
     </x-slot>
 
     <div class="py-6">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-            {{-- Flash messages --}}
             @if(session('success'))
             <div class="mb-4 bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg text-sm">
                 {{ session('success') }}
@@ -37,19 +36,23 @@
 
             {{-- Accesos rápidos --}}
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                <a href="{{ route('admin.pedidos.index') }}" class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 hover:border-orange-400 transition text-center">
+                <a href="{{ route('admin.pedidos.index') }}"
+                   class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 hover:border-orange-400 transition text-center">
                     <div class="text-3xl mb-2">📦</div>
                     <p class="font-medium text-sm dark:text-gray-200">Pedidos</p>
                 </a>
-                <a href="{{ route('admin.mesas.index') }}" class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 hover:border-orange-400 transition text-center">
+                <a href="{{ route('admin.mesas.index') }}"
+                   class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 hover:border-orange-400 transition text-center">
                     <div class="text-3xl mb-2">🪑</div>
                     <p class="font-medium text-sm dark:text-gray-200">Mesas</p>
                 </a>
-                <a href="{{ route('admin.menu-items.index') }}" class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 hover:border-orange-400 transition text-center">
+                <a href="{{ route('admin.menu-items.index') }}"
+                   class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 hover:border-orange-400 transition text-center">
                     <div class="text-3xl mb-2">📋</div>
                     <p class="font-medium text-sm dark:text-gray-200">Menú</p>
                 </a>
-                <a href="{{ route('admin.categorias.index') }}" class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 hover:border-orange-400 transition text-center">
+                <a href="{{ route('admin.categorias.index') }}"
+                   class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 hover:border-orange-400 transition text-center">
                     <div class="text-3xl mb-2">🏷</div>
                     <p class="font-medium text-sm dark:text-gray-200">Categorías</p>
                 </a>
@@ -78,25 +81,39 @@
                             @forelse($ordersToday as $order)
                             <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
                                 <td class="px-4 py-3 font-mono text-gray-500">#{{ $order->id }}</td>
-                                <td class="px-4 py-3 font-medium dark:text-gray-200">Mesa {{ $order->table->number }}</td>
-                                <td class="px-4 py-3 text-gray-600 dark:text-gray-400">{{ $order->user->name }}</td>
+                                <td class="px-4 py-3 font-medium dark:text-gray-200">
+                                    Mesa {{ $order->table->number ?? 'N/A' }}
+                                </td>
+                                <td class="px-4 py-3 text-gray-600 dark:text-gray-400">
+                                    {{ $order->user->name ?? 'N/A' }}
+                                </td>
                                 <td class="px-4 py-3">
                                     <span class="px-2 py-1 rounded-full text-xs font-medium
-                                        {{ $order->status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                                        ($order->status === 'preparing' ? 'bg-blue-100 text-blue-800' :
-                                        ($order->status === 'ready' ? 'bg-green-100 text-green-800' :
-                                        ($order->status === 'paid' ? 'bg-purple-100 text-purple-800' : 'bg-gray-100 text-gray-800'))) }}">
+                                        {{ $order->status === 'pending'   ? 'bg-yellow-100 text-yellow-800' :
+                                          ($order->status === 'preparing' ? 'bg-blue-100 text-blue-800' :
+                                          ($order->status === 'ready'     ? 'bg-green-100 text-green-800' :
+                                          ($order->status === 'delivered' ? 'bg-teal-100 text-teal-800' :
+                                          ($order->status === 'paid'      ? 'bg-purple-100 text-purple-800' : 'bg-red-100 text-red-800')))) }}">
                                         {{ $order->status_label }}
                                     </span>
                                 </td>
-                                <td class="px-4 py-3 font-medium dark:text-gray-200">${{ number_format($order->total, 0, ',', '.') }}</td>
-                                <td class="px-4 py-3 text-gray-500">{{ $order->created_at->format('H:i') }}</td>
+                                <td class="px-4 py-3 font-medium dark:text-gray-200">
+                                    ${{ number_format($order->total, 0, ',', '.') }}
+                                </td>
+                                <td class="px-4 py-3 text-gray-500">
+                                    {{ $order->created_at->format('H:i') }}
+                                </td>
                                 <td class="px-4 py-3">
-                                    <a href="{{ route('admin.pedidos.show', $order) }}" class="text-orange-500 hover:underline text-xs">Ver</a>
+                                    <a href="{{ route('admin.pedidos.show', $order) }}"
+                                       class="text-orange-500 hover:underline text-xs">Ver</a>
                                 </td>
                             </tr>
                             @empty
-                            <tr><td colspan="7" class="px-4 py-8 text-center text-gray-400">No hay pedidos hoy.</td></tr>
+                            <tr>
+                                <td colspan="7" class="px-4 py-8 text-center text-gray-400">
+                                    No hay pedidos hoy.
+                                </td>
+                            </tr>
                             @endforelse
                         </tbody>
                     </table>
