@@ -76,7 +76,7 @@ class Order extends Model
             'delivered' => 'Entregado',
             'paid'      => 'Pagado',
             'cancelled' => 'Cancelado',
-            default     => $this->status,
+            default     => $this->status ?? 'Sin estado',
         };
     }
 

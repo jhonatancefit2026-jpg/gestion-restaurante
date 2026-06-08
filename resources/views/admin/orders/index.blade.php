@@ -68,19 +68,28 @@
                             <td class="px-4 py-3 font-semibold dark:text-gray-200">${{ number_format($order->total, 0, ',', '.') }}</td>
                             <td class="px-4 py-3 text-gray-400 text-xs">{{ $order->created_at->format('H:i') }}</td>
                             <td class="px-4 py-3">
-                                <form method="POST" action="{{ route('admin.orders.status', $order) }}" class="flex gap-2 items-center justify-center">
-                                    @csrf @method('PATCH')
-                                    <select name="status" class="border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 rounded px-2 py-1 text-xs">
+                                <form method="POST"
+                                      action="{{ route('admin.orders.status', $order) }}"
+                                      class="flex gap-2 items-center justify-center">
+                                    @csrf
+                                    @method('PATCH')
+                                    <select name="status"
+                                            class="border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 rounded px-2 py-1 text-xs">
                                         @foreach(['pending'=>'Pendiente','preparing'=>'Preparando','ready'=>'Listo','delivered'=>'Entregado','paid'=>'Pagado','cancelled'=>'Cancelado'] as $v => $l)
                                         <option value="{{ $v }}" {{ $order->status === $v ? 'selected' : '' }}>{{ $l }}</option>
                                         @endforeach
                                     </select>
-                                    <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white text-xs px-3 py-1.5 rounded transition">OK</button>
+                                    <button type="submit"
+                                            class="bg-orange-500 hover:bg-orange-600 text-white text-xs px-3 py-1.5 rounded transition">
+                                        OK
+                                    </button>
                                 </form>
                             </td>
                         </tr>
                         @empty
-                        <tr><td colspan="8" class="px-4 py-10 text-center text-gray-400">No hay pedidos.</td></tr>
+                        <tr>
+                            <td colspan="8" class="px-4 py-10 text-center text-gray-400">No hay pedidos.</td>
+                        </tr>
                         @endforelse
                     </tbody>
                 </table>

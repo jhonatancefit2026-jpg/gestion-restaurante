@@ -16,8 +16,8 @@ class AdminOrderController extends Controller
             $query->where('status', $request->status);
         }
 
-        $orders      = $query->paginate(15);
-        $totalPaid   = Order::today()->paid()->sum('total');
+        $orders       = $query->paginate(15);
+        $totalPaid    = Order::today()->paid()->sum('total');
         $statusCounts = Order::today()
             ->selectRaw('status, count(*) as count')
             ->groupBy('status')
@@ -38,12 +38,13 @@ class AdminOrderController extends Controller
             'status' => 'required|in:' . implode(',', Order::STATUSES),
         ]);
 
-        $oldStatus = $pedido->status;
         $pedido->update(['status' => $request->status]);
 
-        // Liberar mesa al pagar
         if ($request->status === 'paid') {
-            $pedido->table->free();
+            $pedido->load('table');
+            if ($pedido->table) {
+                $pedido->table->free();
+            }
         }
 
         return back()->with('success', "Pedido #{$pedido->id} actualizado a '{$pedido->status_label}'.");
