@@ -7,12 +7,16 @@ use App\Models\MenuItem;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class OrderItemController extends Controller
 {
     public function store(Request $request, Order $order)
     {
-        $this->authorize('addItems', $order);
+        // Verificar que el pedido esté en pending
+        if (! $order->isPending() && ! auth()->user()->isAdmin()) {
+            return back()->with('error', 'Solo puedes modificar pedidos en estado pendiente.');
+        }
 
         $request->validate([
             'menu_item_id'    => 'required|exists:menu_items,id',
@@ -45,9 +49,13 @@ class OrderItemController extends Controller
 
     public function destroy(Order $order, OrderItem $item)
     {
-        $this->authorize('addItems', $order);
+        if (! $order->isPending() && ! auth()->user()->isAdmin()) {
+            return back()->with('error', 'Solo puedes modificar pedidos en estado pendiente.');
+        }
+
         abort_if($item->order_id !== $order->id, 403);
         $item->delete();
+
         return back()->with('success', 'Item eliminado del pedido.');
     }
 }
