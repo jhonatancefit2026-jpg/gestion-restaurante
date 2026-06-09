@@ -11,7 +11,7 @@ class CategorySeeder extends Seeder
     {
         $categories = ['Entradas', 'Platos Fuertes', 'Bebidas', 'Postres'];
         foreach ($categories as $name) {
-            Category::create(['name' => $name]);
+            Category::updateOrCreate(['name' => $name]);
         }
     }
 }

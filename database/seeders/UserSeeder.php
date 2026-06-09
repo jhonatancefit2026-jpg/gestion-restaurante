@@ -10,25 +10,32 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        User::create([
-            'name'     => 'Administrador',
-            'email'    => 'admin@restopedidos.com',
-            'password' => Hash::make('password'),
-            'role'     => 'admin',
-        ]);
+        // Usar updateOrCreate para evitar duplicados
+        User::updateOrCreate(
+            ['email' => 'admin@restopedidos.com'],
+            [
+                'name'     => 'Administrador',
+                'password' => Hash::make('password'),
+                'role'     => 'admin',
+            ]
+        );
 
-        User::create([
-            'name'     => 'Mesero Juan',
-            'email'    => 'mesero@restopedidos.com',
-            'password' => Hash::make('password'),
-            'role'     => 'waiter',
-        ]);
+        User::updateOrCreate(
+            ['email' => 'mesero@restopedidos.com'],
+            [
+                'name'     => 'Mesero Juan',
+                'password' => Hash::make('password'),
+                'role'     => 'waiter',
+            ]
+        );
 
-        User::create([
-            'name'     => 'Mesera Ana',
-            'email'    => 'ana@restopedidos.com',
-            'password' => Hash::make('password'),
-            'role'     => 'waiter',
-        ]);
+        User::updateOrCreate(
+            ['email' => 'ana@restopedidos.com'],
+            [
+                'name'     => 'Mesera Ana',
+                'password' => Hash::make('password'),
+                'role'     => 'waiter',
+            ]
+        );
     }
 }

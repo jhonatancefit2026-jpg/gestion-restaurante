@@ -23,11 +23,10 @@ class RestaurantTableSeeder extends Seeder
         ];
 
         foreach ($tables as $table) {
-            RestaurantTable::create([
-                'number'   => $table['number'],
-                'capacity' => $table['capacity'],
-                'status'   => 'free',
-            ]);
+            RestaurantTable::updateOrCreate(
+                ['number' => $table['number']],
+                ['capacity' => $table['capacity'], 'status' => 'free']
+            );
         }
     }
 }
