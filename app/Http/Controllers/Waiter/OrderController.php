@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\RestaurantTable;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -18,14 +19,16 @@ class OrderController extends Controller
         abort_if(! $table->isFree(), 422, 'La mesa no está disponible.');
 
         $categories = Category::with(['menuItems' => fn($q) => $q->available()])->get();
+        $waiters    = User::whereIn('role', ['waiter', 'admin'])->orderBy('name')->get();
 
-        return view('waiter.orders.create', compact('table', 'categories'));
+        return view('waiter.orders.create', compact('table', 'categories', 'waiters'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'table_id' => 'required|exists:tables,id',
+            'user_id'  => 'required|exists:users,id',
             'notes'    => 'nullable|string|max:500',
         ]);
 
@@ -34,7 +37,7 @@ class OrderController extends Controller
 
         $order = Order::create([
             'table_id' => $table->id,
-            'user_id'  => auth()->id(),
+            'user_id'  => $request->user_id,
             'status'   => 'pending',
             'subtotal' => 0,
             'total'    => 0,
@@ -57,7 +60,6 @@ class OrderController extends Controller
 
     public function deliver(Order $order)
     {
-        $this->authorize('deliver', $order);
         $order->update(['status' => 'delivered']);
         return back()->with('success', 'Pedido marcado como entregado.');
     }

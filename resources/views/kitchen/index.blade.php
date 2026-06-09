@@ -82,8 +82,16 @@
     @endif
 </div>
 
-<div class="fixed bottom-4 right-4 text-xs text-gray-600">
-    <a href="{{ route('login') }}" class="hover:text-gray-400">← Panel</a>
+{{-- Botones flotantes --}}
+<div class="fixed bottom-4 right-4 flex gap-3">
+    <a href="{{ url('/') }}"
+       class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white text-sm rounded-lg transition">
+        🏠 Inicio
+    </a>
+    <a href="{{ route('login') }}"
+       class="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm rounded-lg transition">
+        🔐 Login
+    </a>
 </div>
 
 </body>

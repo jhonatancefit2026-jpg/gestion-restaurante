@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'RestoPedidos') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -32,5 +32,14 @@
                 {{ $slot }}
             </main>
         </div>
+
+        {{-- Botón flotante volver al inicio --}}
+        <div class="fixed bottom-4 left-4">
+            <a href="{{ auth()->user()?->role === 'admin' ? route('admin.dashboard') : route('waiter.tables') }}"
+               class="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white text-xs rounded-lg shadow-lg transition border border-gray-700 flex items-center gap-1">
+                🏠 Inicio
+            </a>
+        </div>
+
     </body>
 </html>
