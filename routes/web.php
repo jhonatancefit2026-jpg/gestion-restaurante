@@ -37,8 +37,8 @@ Route::middleware('auth')->group(function () {
 // ── Vista Cocina (sin auth) ───────────────────────────────────────────────
 Route::get('/cocina', [KitchenController::class, 'index'])->name('kitchen.index');
 
-// ── Zona Mesero ───────────────────────────────────────────────────────────
-Route::middleware(['auth', 'role:waiter,admin'])->prefix('mesero')->name('waiter.')->group(function () {
+// ── Zona Mesero (todos los autenticados pueden ver mesas) ─────────────────
+Route::middleware(['auth'])->prefix('mesero')->name('waiter.')->group(function () {
     Route::get('/mesas', [WaiterDashboardController::class, 'index'])->name('tables');
 
     Route::get('/pedidos/create', [OrderController::class, 'create'])->name('pedidos.create');
