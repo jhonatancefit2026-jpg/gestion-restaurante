@@ -1,0 +1,10 @@
+nixpacks.toml
+[phases.setup]
+nixPkgs = ["php83", "nodejs_22"]
+
+[phases.build]
+cmds = [
+  "composer install --no-dev --optimize-autoloader",
+  "npm ci",
+  "npm run build"
+]
