@@ -7,7 +7,8 @@ nixPkgs = [
   "php83Extensions.mbstring",
   "php83Extensions.openssl",
   "php83Extensions.zip",
-  "php83Extensions.curl"
+  "php83Extensions.curl",
+  "php83Packages.composer"
 ]
 
 [phases.install]
