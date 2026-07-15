@@ -37,6 +37,19 @@ Route::middleware('auth')->group(function () {
 // ── Vista Cocina (sin auth) ───────────────────────────────────────────────
 Route::get('/cocina', [KitchenController::class, 'index'])->name('kitchen.index');
 
+// ── DEBUG TEMPORAL - borrar después de diagnosticar ───────────────────────
+Route::get('/debug-info-temporal', function () {
+    return response()->json([
+        'environment' => app()->environment(),
+        'app_url_config' => config('app.url'),
+        'app_env_config' => config('app.env'),
+        'scheme_detectado' => request()->getScheme(),
+        'scheme_and_host' => request()->getSchemeAndHttpHost(),
+        'is_secure' => request()->isSecure(),
+        'forwarded_proto_header' => request()->header('X-Forwarded-Proto'),
+    ]);
+});
+
 // ── Zona Mesero (todos los autenticados pueden ver mesas) ─────────────────
 Route::middleware(['auth'])->prefix('mesero')->name('waiter.')->group(function () {
     Route::get('/mesas', [WaiterDashboardController::class, 'index'])->name('tables');
