@@ -19,7 +19,9 @@
                             🪑 Mesas
                         </x-nav-link>
                         <x-nav-link :href="route('admin.pedidos.index')" :active="request()->routeIs('admin.pedidos*')">
-                            📦 Pedidos
+                            <svg class="w-4 h-4 inline-block mr-1 -mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 3v7a2 2 0 01-2 2H5a2 2 0 01-2-2V3m3 0v7m0-7v0M6 12v9m10-18c-1.5 0-3 1.5-3 4s1.5 4 3 4v10" />
+                            </svg>Pedidos
                         </x-nav-link>
                         <x-nav-link :href="route('admin.mesas.index')" :active="request()->routeIs('admin.mesas*')">
                             ⚙️ Gestión Mesas
@@ -97,7 +99,9 @@
                     🪑 Mesas
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.pedidos.index')" :active="request()->routeIs('admin.pedidos*')">
-                    📦 Pedidos
+                    <svg class="w-4 h-4 inline-block mr-1 -mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 3v7a2 2 0 01-2 2H5a2 2 0 01-2-2V3m3 0v7m0-7v0M6 12v9m10-18c-1.5 0-3 1.5-3 4s1.5 4 3 4v10" />
+                    </svg>Pedidos
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.mesas.index')" :active="request()->routeIs('admin.mesas*')">
                     ⚙️ Gestión Mesas
