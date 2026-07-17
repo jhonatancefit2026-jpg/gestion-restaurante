@@ -84,14 +84,16 @@
 
 {{-- Botones flotantes --}}
 <div class="fixed bottom-4 right-4 flex gap-3">
-    <a href="{{ url('/') }}"
+    <a href="{{ auth()->check() ? (auth()->user()->role === 'admin' ? route('admin.dashboard') : route('waiter.tables')) : url('/') }}"
        class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white text-sm rounded-lg transition">
         🏠 Inicio
     </a>
+    @guest
     <a href="{{ route('login') }}"
        class="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm rounded-lg transition">
         🔐 Login
     </a>
+    @endguest
 </div>
 
 </body>
