@@ -153,6 +153,11 @@
            class="px-8 py-4 border border-gray-600 hover:border-green-400 text-gray-300 hover:text-green-400 font-semibold rounded-xl text-lg transition">
             🍳 Vista Cocina
         </a>
+        <a href="{{ asset('downloads/restopedidos.apk') }}"
+           class="px-8 py-4 border border-gray-600 hover:border-purple-400 text-gray-300 hover:text-purple-400 font-semibold rounded-xl text-lg transition"
+           download>
+            📱 Descargar App
+        </a>
     </div>
 </div>
 
